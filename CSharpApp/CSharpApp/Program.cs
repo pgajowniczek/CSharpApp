@@ -1,18 +1,10 @@
-﻿var name = "Ewa";
-var gender = 'K';
-var age = 20;
+﻿using CSharpApp;
 
-if (gender == 'K' && age < 30)
-{
-    Console.WriteLine("Kobieta poniżej 30 lat");
-}
-
-if(name == "Ewa" && age == 30)
-{
-    Console.WriteLine("Ewa, lat 30");
-}
-
-if(age < 18 && gender == 'M')
-{
-    Console.WriteLine("Niepełnoletni Mężczyzna");
-}
+var employee = new Employee("Piotr", "Gajowniczek");
+employee.AddGrade(2);
+employee.AddGrade(2);
+employee.AddGrade(6);
+var statistics = employee.GetStatistics();
+Console.WriteLine($"Average: {statistics.Average:N2}");
+Console.WriteLine($"Min: {statistics.Min}");
+Console.WriteLine($"Max: {statistics.Max}");
