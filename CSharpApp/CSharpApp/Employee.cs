@@ -1,4 +1,5 @@
-﻿namespace CSharpApp
+﻿using System.Linq;
+namespace CSharpApp
 {
     public class Employee
     {
@@ -27,10 +28,10 @@
         }
 
         public void AddGrade(double grade)
-        {
+            {
             var value = (float)grade;
             AddGrade(value);
-        }
+            }
 
         public void AddGrade(long grade)
         {
@@ -47,11 +48,11 @@
             statistics.Min = float.MaxValue;
 
             foreach (var grade in this.grades)
-            {
+        {
                 statistics.Max = Math.Max(statistics.Max, grade);
                 statistics.Min = Math.Min(statistics.Min, grade);
                 statistics.Average += grade;
-            }
+        }
 
             statistics.Average /= this.grades.Count;
 
