@@ -22,7 +22,8 @@ namespace CSharpApp
             }
             else
             {
-                Console.WriteLine("invalid grade value");
+                throw new Exception("invalid grade value");
+                //Console.WriteLine("invalid grade value");
             }
             
         }
@@ -72,7 +73,8 @@ namespace CSharpApp
                     this.grades.Add(20);
                     break;
                 default:
-                    Console.WriteLine("Incorrect value :(");
+                    throw new Exception("Incorrect value :(");
+                    //Console.WriteLine("Incorrect value :(");
                     break;
             }    
         }
