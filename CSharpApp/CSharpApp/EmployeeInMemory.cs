@@ -1,20 +1,22 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace CSharpApp
 {
-    public class Employee : IEmployee
+    public class EmployeeInMemory : EmployeeBase
     {
-        private List<float> grades = new List<float>();
-
-        public Employee(string name, string surname)
+        public EmployeeInMemory(string name, string surname) 
+            : base(name, surname)
         {
-            this.Name = name;
-            this.Surname = surname;
+
         }
 
-        public string Name { get; set; }
-        public string Surname { get; set; }
+        private List<float> grades = new List<float>();
 
-        public void AddGrade(float grade)
+        public override void AddGrade(float grade)
         {
             if (grade >= 0 && grade <= 100)
             {
@@ -23,38 +25,28 @@ namespace CSharpApp
             else
             {
                 throw new Exception("invalid grade value");
-                //Console.WriteLine("invalid grade value");
             }
-            
         }
 
-        public void AddGrade(int grade)
+        public override void AddGrade(double grade)
+        {
+            var value = (float)grade;
+            AddGrade(value);
+        }
+
+        public override void AddGrade(long grade)
+        {
+            var value = (float)grade;
+            AddGrade(value);
+        }
+
+        public override void AddGrade(int grade)
         {
             float result = (float)grade;
             AddGrade(result);
         }
-        public void AddGrade(string grade)
-        {
-            if (float.TryParse(grade, out float result))
-            {
-                AddGrade(result);
-            }
 
-        }
-
-        public void AddGrade(double grade)
-            {
-            var value = (float)grade;
-            AddGrade(value);
-            }
-
-        public void AddGrade(long grade)
-        {
-            var value = (float)grade;
-            AddGrade(value);
-        }
-
-        public void AddGrade(char grade)
+        public override void AddGrade(char grade)
         {
             switch (grade)
             {
@@ -80,10 +72,18 @@ namespace CSharpApp
                     break;
                 default:
                     throw new Exception("Incorrect value :(");
-            }    
+            }
         }
 
-        public Statistics GetStatistics()
+        public override void AddGrade(string grade)
+        {
+            if (float.TryParse(grade, out float result))
+            {
+                AddGrade(result);
+            }
+        }
+
+        public override Statistics GetStatistics()
         {
             var statistics = new Statistics();
 
@@ -92,15 +92,15 @@ namespace CSharpApp
             statistics.Min = float.MaxValue;
 
             foreach (var grade in this.grades)
-        {
+            {
                 statistics.Max = Math.Max(statistics.Max, grade);
                 statistics.Min = Math.Min(statistics.Min, grade);
                 statistics.Average += grade;
-        }
+            }
 
             statistics.Average /= this.grades.Count;
 
-            switch(statistics.Average)
+            switch (statistics.Average)
             {
                 case var average when average >= 80:
                     statistics.AverageLetter = 'A';
@@ -121,7 +121,5 @@ namespace CSharpApp
 
             return statistics;
         }
-
-        
     }
 }
